@@ -1,4 +1,4 @@
-package com.example.imran.mgd1coursework;
+package com.example.imran.mgd1cwstarter;
 
 import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
