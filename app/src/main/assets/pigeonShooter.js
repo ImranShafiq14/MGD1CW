@@ -1,59 +1,92 @@
-var canvas;
-var canvasContext;
-var canvasX;
-var canvasY;
-var mouseIsDown = 0;
-
-var sBullet;
-var bkgdImage;
-var sShooter;
-var sPigeon;
-
-var lastPt=null;
-var gameOverScreen = false;
-
-var score = 0;
-var lives = 3;
-
-var startTimeMS;
-
-//window.onload =
-function load() {
-    canvas = document.getElementById('gameCanvas');
-    canvasContext = canvas.getContext('2d');
-
-    init();
-
-    canvasX = canvas.width/2;
-    canvasY = canvas.height-30;
-
-    if(!gameOverScreen)
-    {
-        gameLoop();
-    }
-}
-
-function aSprite(x, y, imageSRC, velx, vely) {
+class aSprite {
+    constructor(x, y, imageSRC, velx, vely, spType){
     this.zindex = 0;
     this.x = x;
     this.y = y;
     this.vx = velx;
     this.vy = vely;
+    this.sType = spType;
     this.sImage = new Image();
     this.sImage.src = imageSRC;
+    }
+    // Getter
+    get xPos(){
+        return this.x;
+    }
+
+    get yPos(){
+        return this.y;
+    }
+
+    // Setter
+        set xPos(newX){
+        this.x = newX;
+    }
+
+    set yPos(newY){
+        this.y = newY;
+    }
+
+    // Method
+    render()
+    {
+        canvasContext.drawImage(this.sImage,this.x, this.y);
+    }
+    // Method
+    scrollBK(delta)
+    {
+        //var xPos = delta * this.vx;
+
+        canvasContext.save();
+        canvasContext.translate(-delta, 0);
+        canvasContext.drawImage(this.sImage,0, 0);
+        canvasContext.drawImage(this.sImage,this.sImage.width, 0);
+        canvasContext.restore();
+    }
+    // Method
+    sPos(newX,newY){
+        this.x = newX;
+        this.y = newY;
+    }
+
+    // Static Method
+    static distance(a, b) {
+        const dx = a.x - b.x;
+        const dy = a.y - b.y;
+
+        return Math.hypot(dx, dy);
+    }
+
+    // Method
+    spriteType(){
+        console.log('I am an instance of aSprite!!!');
+    }
+
 }
-aSprite.prototype.renderF = function(width, height)
-{
-    canvasContext.drawImage(this.sImage,this.x, this.y, width, height );
+
+class Enemy extends aSprite {
+    // Method
+    spriteType(){
+        super.spriteType();
+        console.log('I am a ' + this.sType + ' instance of aSprite!!!');
+    }
 }
-aSprite.prototype.render = function()
-{
-    canvasContext.drawImage(this.sImage,this.x, this.y);
+
+var canvas;
+var canvasContext;
+var travel=0;
+var theCar;
+
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 }
-aSprite.prototype.update = function(deltaTime)
+
+function load()
 {
-    this.x += deltaTime * this.vx;
-    this.y += deltaTime * this.vy;
+    canvas = document.getElementById('gameCanvas');
+    canvasContext = canvas.getContext('2d');
+    init();
 }
 
 function init() {
@@ -61,33 +94,35 @@ function init() {
     if (canvas.getContext) {
     //Set Event Listeners for window, mouse and touch
 
-        window.addEventListener('resize', resizeCanvas, false);
-        window.addEventListener('orientationchange', resizeCanvas, false);
+    window.addEventListener('resize', resizeCanvas, false);
+    window.addEventListener('orientationchange', resizeCanvas, false);
 
-        canvas.addEventListener("touchstart", touchDown, false);
-        canvas.addEventListener("touchmove", touchXY, true);
-        canvas.addEventListener("touchend", touchUp, false);
+    canvas.addEventListener("touchstart", touchDown, false);
+    canvas.addEventListener("touchmove", touchXY, true);
+    canvas.addEventListener("touchend", touchUp, false);
 
-        document.body.addEventListener("touchcancel", touchUp, false);
+    document.body.addEventListener("touchcancel", touchUp, false);
 
-        resizeCanvas();
+    resizeCanvas();
 
-        bkgdImage = new aSprite(0,0,"BackgroundV1.png", 0, 0);
-        sShooter = new aSprite(25,canvas.height-140,"shooter2.png", 0, 0);
-        sPigeon = new aSprite(canvas.width,sShooter.y,"Pigeon2.png", -50, 0);
-        sBullet = new aSprite(sShooter.x+sShooter.sImage.width/2,sShooter.y+(sShooter.sImage.height/2),"bullet2.png", 25, 0);
-        startTimeMS = Date.now();
+    bkgdImage = new aSprite(0,0,"Road.png", 100, 0, "Generic");
+    theCar = new aSprite(100,0,"Car.png", 0, 0, "Generic");
+    theCar.sPos(100,400);
+    console.log(theCar.y);
+    startTimeMS = Date.now();
+    gameLoop();
     }
-}
-
-function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
 }
 
 function gameLoop(){
     console.log("gameLoop");
     var elapsed = (Date.now() - startTimeMS)/1000;
+    travel += elapsed * bkgdImage.vx;
+    if (travel > bkgdImage.sImage.width)
+    {
+        travel = 0;
+    }
+
     update(elapsed);
     render(elapsed);
     startTimeMS = Date.now();
@@ -95,15 +130,12 @@ function gameLoop(){
 }
 
 function render(delta) {
-    bkgdImage.renderF(canvas.width,canvas.height);
-    sBullet.render();
-    sShooter.render();
-    sPigeon.render();
+    canvasContext.clearRect(0,0,canvas.width, canvas.height);
+    bkgdImage.scrollBK(travel);
+    theCar.render();
 }
 
 function update(delta) {
-    sBullet.update(delta);
-    sPigeon.update(delta);
 }
 
 function collisionDetection() {
@@ -126,10 +158,8 @@ function touchUp(evt) {
 
 function touchDown(evt) {
     evt.preventDefault();
-    if(gameOverScreenScreen) {
-        //player1Score = 0;
-        //player2Score = 0;
-        //showingWinScreen = false;
+    if(gameOverScreenScreen)
+    {
         return;
     }
     touchXY(evt);
