@@ -170,12 +170,12 @@ function init() {
 
     layer8 = new aSprite(0,0,"layer8.png", 10, 0, "Generic");
     layer7 = new aSprite(0,0,"layer7.png", 10, 0, "Generic");
-    layer6 = new aSprite(0,0,"layer6.png", 15, 0, "Generic");
-    layer5 = new aSprite(0,0,"layer5.png", 20, 0, "Generic");
-    layer4 = new aSprite(0,0,"layer4.png", 25, 0, "Generic");
-    layer3 = new aSprite(0,0,"layer3.png", 30, 0, "Generic");
-    layer2 = new aSprite(0,0,"layer2.png", 35, 0, "Generic");
-    layer1 = new aSprite(0,0,"layer1.png", 40, 0, "Generic");
+    layer6 = new aSprite(0,0,"layer6.png", 13, 0, "Generic");
+    layer5 = new aSprite(0,0,"layer5.png", 16, 0, "Generic");
+    layer4 = new aSprite(0,0,"layer4.png", 19, 0, "Generic");
+    layer3 = new aSprite(0,0,"layer3.png", 22, 0, "Generic");
+    layer2 = new aSprite(0,0,"layer2.png", 20, 0, "Generic");
+    layer1 = new aSprite(0,0,"layer1.png", 20, 0, "Generic");
     startTimeMS = Date.now();
     gameLoop();
     }
@@ -247,12 +247,45 @@ function gameLoop(){
     //}
 
 
+   /* for (var i = 0; i < layers.length; i++)
+    {
+        layerSpeed += elapsed * layers[i].vx
+        if (layerSpeed > layers[i].sImage.width)
+        {
+            layerSpeed = 0;
+        }
+    }*/
+
+
+    /*layers.forEach(function(layer)
+    {
+        layerSpeed += elapsed * layer.vx
+        if (layerSpeed > layer.sImage.width)
+        {
+            layerSpeed = 0;
+        }
+    }*/
+
+
+    /*for (var i = 0; i < layers.length; i++)
+    {
+        var layer = layers[i];
+        layerSpeed += elapsed * layer.vx
+        if (layerSpeed > layer.sImage.width)
+        {
+            layerSpeed = 0;
+        }
+    }*/
+
+
 
     //travel += elapsed * layers[0].vx
     //if (travel > layers[0].sImage.width)
     //{
         //travel = 0;
     //}
+
+
 
     l8speed += elapsed * layer8.vx
     if (l8speed > layer8.sImage.width /*|| l8speed < -layer8.sImage.width*/)
@@ -344,6 +377,18 @@ function render(delta) {
     layers[6].scrollBK(layerSpeed);
     layers[7].scrollBK(layerSpeed);*/
 
+
+
+    /*layers.forEach(function(layer)
+    {
+        layer.scrollBK(layerSpeed);
+    }*/
+
+    /*for (var i = 0; i < layers.length; i++)
+    {
+        var layer = layers[i];
+        layer.scrollBK(layerSpeed);
+    }*/
 
     layer8.scrollBK(l8speed);
     layer7.scrollBK(l7speed);
