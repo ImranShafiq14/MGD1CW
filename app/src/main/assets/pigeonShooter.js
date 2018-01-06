@@ -215,21 +215,40 @@ function gameLoop(){
 
 
 
-    for (i = 0; i < layers.length; i++)
+    /*for (i = 0; i < layers.length; i++)
     {
         for (s = 0; s <layerSpeeds.length; s++)
         //for (s = 0; s < layers[i].length; s++)
         {
             //console.log(layerSpeeds[s]);
-            layerSpeeds[s] += elapsed * layers[i].vx;
-            console.log("Initial Speed " + layerSpeed + layers[i]);
-            if (layerSpeeds[s] > layers[i].sImage.width)
+            layerSpeeds[i] += elapsed * (layers[i].vx);
+            //console.log("Initial Speed " + layerSpeed + layers[i]);
+            if (layerSpeeds[i] > layers[i].sImage.width)
             {
-                layerSpeeds[s] = 0;
-                console.log(layerSpeed);
+                layerSpeeds[i] = 0;
+                //console.log(layerSpeed);
             }
         }
-    }
+    }*/
+
+
+    for (i = 0; i < layers.length; i++)
+        {
+            //for (s = 0; s <layerSpeeds.length; s++)
+            //for (s = 0; s < layers[i].length; s++)
+            //{
+                //console.log(layerSpeeds[s]);
+                //console.log(layers[i].vx);
+                layerSpeeds[i] += elapsed * (layers[i].vx);
+                //console.log("Initial Speed " + layerSpeeds[i] + layers[i].vx);
+                if (layerSpeeds[i] > layers[i].sImage.width)
+                {
+                    layerSpeeds[i] = 0;
+                    //console.log(layerSpeed);
+                }
+            //}
+        }
+
 
     //for (var s = 0; s <layerSpeeds.length; s++)
     //{
@@ -379,14 +398,25 @@ function render(delta) {
     layers[7].scrollBK(layerSpeed);*/
 
 
-    for (i = 0; i < layers.length; i++)
+    /*for (i = 0; i < layers.length; i++)
         {
             //layerSpeeds[i] = [];
-            for (s = 0; s <layerSpeeds[s].length; s++)
+            for (s = 0; s <layerSpeeds.length; s++)
             {
-                layers[i].scrollBK(layerSpeeds[s]);
+                layers[i].scrollBK(layerSpeeds[i]);
             }
-        }
+        }*/
+
+
+    for (i = 0; i < layers.length; i++)
+    {
+        //layerSpeeds[i] = [];
+        //for (s = 0; s <layerSpeeds.length; s++)
+        //{
+            layers[i].scrollBK(layerSpeeds[i]);
+            //console.log(layerSpeeds[i]);
+        //}
+    }
 
 
     /*layers.forEach(function(layer)
