@@ -86,8 +86,6 @@ class Enemy extends aSprite {
 
 var canvas;
 var canvasContext;
-var travel=0;
-//var travel[]=0;
 var theCar;
 var layers = [];
 var layerSpeeds = [];
@@ -133,23 +131,9 @@ function init() {
     /*bkgdImage = new aSprite(0,0,"Road.png", 100, 0, "Generic");
     theCar = new aSprite(100,0,"Car.png", 0, 0, "Generic");
     theCar.sPos(100,400);
-    console.log(theCar.y);
-    startTimeMS = Date.now();
-    gameLoop();*/
+    console.log(theCar.y);*/
 
 
-    /*var layers = [
-        layer8 = new aSprite(0,0,"layer8.png", 10, 0, "Generic"),
-        layer7 = new aSprite(0,0,"layer7.png", 25, 0, "Generic"),
-        layer6 = new aSprite(0,0,"layer6.png", 50, 0, "Generic"),
-        layer5 = new aSprite(0,0,"layer5.png", 100, 0, "Generic"),
-        layer4 = new aSprite(0,0,"layer4.png", 100, 0, "Generic"),
-        layer3 = new aSprite(0,0,"layer3.png", 100, 0, "Generic"),
-        layer2 = new aSprite(0,0,"layer2.png", 100, 0, "Generic"),
-        layer1 = new aSprite(0,0,"layer1.png", 200, 0, "Generic")
-    ];*/
-
-    //var layers = [];
     layers[0] = new aSprite(0,0,"layer8.png", 10, 0, "Generic");
     layers[1] = new aSprite(0,0,"layer7.png", 10, 0, "Generic");
     layers[2] = new aSprite(0,0,"layer6.png", 13, 0, "Generic");
@@ -184,142 +168,36 @@ function init() {
 function gameLoop(){
     //console.log("gameLoop");
     var elapsed = (Date.now() - startTimeMS)/1000;
-    //travel += elapsed * bkgdImage.vx;
-    //if (travel > bkgdImage.sImage.width)
-
-    //travel += elapsed * layers.vx;
-    //if (travel > layers.sImage.width)
-
-    /*for (var i = 0; i < layers.length; i++)
-    {
-        //for (var t = 0; t <layers.length; t++)
-        //{
-            travel[t] += elapsed * layers[i].vx;
-            if (travel[t] > layers[i].sImage.width)
-            {
-                travel[t] = 0;
-            }
-
-            /*var layerSpeed = travel[t] += elapsed * layers[i].vx;
-            if (layerSpeed > layers[i].sImage.width)
-            {
-                layerSpeed = 0;
-            }*/
-        //}
-        //var layerSpeed = layers[i.vx];
-
-    //}*/
-
-    //travel += elapsed * (layer8.vx)
-    //if (travel > (layer8).sImage.width)
-
-
-
-    /*for (i = 0; i < layers.length; i++)
-    {
-        for (s = 0; s <layerSpeeds.length; s++)
-        //for (s = 0; s < layers[i].length; s++)
-        {
-            //console.log(layerSpeeds[s]);
-            layerSpeeds[i] += elapsed * (layers[i].vx);
-            //console.log("Initial Speed " + layerSpeed + layers[i]);
-            if (layerSpeeds[i] > layers[i].sImage.width)
-            {
-                layerSpeeds[i] = 0;
-                //console.log(layerSpeed);
-            }
-        }
-    }*/
-
 
     for (i = 0; i < layers.length; i++)
+    {
+        //console.log(layerSpeeds[s]);
+        //console.log(layers[i].vx);
+        layerSpeeds[i] += elapsed * (layers[i].vx);
+        //console.log("Initial Speed " + layerSpeeds[i] + layers[i].vx);
+        if (layerSpeeds[i] > layers[i].sImage.width)
         {
-            //for (s = 0; s <layerSpeeds.length; s++)
-            //for (s = 0; s < layers[i].length; s++)
-            //{
-                //console.log(layerSpeeds[s]);
-                //console.log(layers[i].vx);
-                layerSpeeds[i] += elapsed * (layers[i].vx);
-                //console.log("Initial Speed " + layerSpeeds[i] + layers[i].vx);
-                if (layerSpeeds[i] > layers[i].sImage.width)
-                {
-                    layerSpeeds[i] = 0;
-                    //console.log(layerSpeed);
-                }
-            //}
-        }
-
-
-    //for (var s = 0; s <layerSpeeds.length; s++)
-    //{
-     /*   for (var i = 0; i < layers.length; i++)
-        {
-
+            layerSpeeds[i] = 0;
             //console.log(layerSpeed);
-            layerSpeed += elapsed * layers[i].vx;
-            console.log(layers[i].vx);
-            //console.log(layerSpeeds[s]);
-            //console.log(layerSpeed);
-            if (layerSpeed > layers[i].sImage.width)
-            {
-                layerSpeed = 0;
-                //console.log(layerSpeed);
-            }
-        }*/
-    //}
-
-
-   /* for (var i = 0; i < layers.length; i++)
-    {
-        layerSpeed += elapsed * layers[i].vx
-        if (layerSpeed > layers[i].sImage.width)
-        {
-            layerSpeed = 0;
         }
-    }*/
-
-
-    /*layers.forEach(function(layer)
-    {
-        layerSpeed += elapsed * layer.vx
-        if (layerSpeed > layer.sImage.width)
-        {
-            layerSpeed = 0;
-        }
-    }*/
-
-
-    /*for (var i = 0; i < layers.length; i++)
-    {
-        var layer = layers[i];
-        layerSpeed += elapsed * layer.vx
-        if (layerSpeed > layer.sImage.width)
-        {
-            layerSpeed = 0;
-        }
-    }*/
-
-    //travel += elapsed * layers[0].vx
-    //if (travel > layers[0].sImage.width)
-    //{
-        //travel = 0;
-    //}
-
+    }
 
 
     /*l8speed += elapsed * layer8.vx
-    if (l8speed > layer8.sImage.width /*|| l8speed < -layer8.sImage.width*///)
-    /*{
+    //if (l8speed > layer8.sImage.width /*|| l8speed < -layer8.sImage.width*///)
+    /*if (l8speed > layer8.sImage.width)
+    {
         l8speed = 0;
     }
 
     l7speed += elapsed * layer7.vx
-    if (l7speed > layer7.sImage.width /*|| l7speed < -layer7.sImage.width*///)
-    /*{
+    //if (l7speed > layer7.sImage.width /*|| l7speed < -layer7.sImage.width*///)
+    /*if (l7speed > layer7.sImage.width)
+    {
         l7speed = 0;
     }
 
-    /*
+
     l6speed += elapsed * layer6.vx
     if (l6speed > layer6.sImage.width)
     {
@@ -365,49 +243,6 @@ function gameLoop(){
 function render(delta) {
     canvasContext.clearRect(0,0,canvas.width, canvas.height);
 
-    //layers.scrollBK(travel);
-
-    //layers[i].scrollBK(travel[t]);
-
-    /*layers[0].scrollBK(travel);
-    layers[1].scrollBK(travel);
-    layers[2].scrollBK(travel);
-    layers[3].scrollBK(travel);
-    layers[4].scrollBK(travel);
-    layers[5].scrollBK(travel);
-    layers[6].scrollBK(travel);
-    layers[7].scrollBK(travel);*/
-
-
-    /*layers[0].scrollBK(layerSpeeds[0]);
-    layers[1].scrollBK(layerSpeeds[1]);
-    layers[2].scrollBK(layerSpeeds[2]);
-    layers[3].scrollBK(layerSpeeds[3]);
-    layers[4].scrollBK(layerSpeeds[4]);
-    layers[5].scrollBK(layerSpeeds[5]);
-    layers[6].scrollBK(layerSpeeds[6]);
-    layers[7].scrollBK(layerSpeeds[7]);*/
-
-    /*layers[0].scrollBK(layerSpeed[layers[0]]);
-    layers[1].scrollBK(layerSpeed[1]);
-    layers[2].scrollBK(layerSpeed[2]);
-    layers[3].scrollBK(layerSpeed[3]);
-    layers[4].scrollBK(layerSpeed);
-    layers[5].scrollBK(layerSpeed);
-    layers[6].scrollBK(layerSpeed);
-    layers[7].scrollBK(layerSpeed);*/
-
-
-    /*for (i = 0; i < layers.length; i++)
-        {
-            //layerSpeeds[i] = [];
-            for (s = 0; s <layerSpeeds.length; s++)
-            {
-                layers[i].scrollBK(layerSpeeds[i]);
-            }
-        }*/
-
-
     for (i = 0; i < layers.length; i++)
     {
         //layerSpeeds[i] = [];
@@ -418,18 +253,6 @@ function render(delta) {
         //}
     }
 
-
-    /*layers.forEach(function(layer)
-    {
-        layer.scrollBK(layerSpeed);
-    }*/
-
-    /*for (var i = 0; i < layers.length; i++)
-    {
-        var layer = layers[i];
-        layer.scrollBK(layerSpeed);
-    }*/
-
     /*layer8.scrollBK(l8speed);
     layer7.scrollBK(l7speed);
     layer6.scrollBK(l6speed);
@@ -438,16 +261,6 @@ function render(delta) {
     layer3.scrollBK(l3speed);
     layer2.scrollBK(l2speed);
     layer1.scrollBK(l1speed);*/
-
-
-    /*layer8.scrollBK(travel);
-    layer7.scrollBK(travel);
-    layer6.scrollBK(travel);
-    layer5.scrollBK(travel);
-    layer4.scrollBK(travel);
-    layer3.scrollBK(travel);
-    layer2.scrollBK(travel);
-    layer1.scrollBK(travel);*/
 
     //bkgdImage.scrollBK(travel);
     //theCar.render();
