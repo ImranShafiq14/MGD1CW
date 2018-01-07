@@ -76,20 +76,9 @@ class Enemy extends aSprite {
 
 var canvas;
 var canvasContext;
-var travel=0;
 var theCar;
 var layers = [];
 var layerSpeeds = [];
-var layerSpeed = 0;
-
-var l1speed = 0;
-var l2speed = 0;
-var l3speed = 0;
-var l4speed = 0;
-var l5speed = 0;
-var l6speed = 0;
-var l7speed = 0;
-var l8speed = 0;
 
 var mainMenu = true;
 var gameLevel = false;
@@ -137,14 +126,24 @@ function init() {
 
     mainMenuBkImg = new aSprite(0,0,"MainMenu.png", 0, 0, "Generic");
 
-    layer8 = new aSprite(0,0,"layer8.png", 10, 0, "Generic");
-    layer7 = new aSprite(0,0,"layer7.png", 10, 0, "Generic");
-    layer6 = new aSprite(0,0,"layer6.png", 13, 0, "Generic");
-    layer5 = new aSprite(0,0,"layer5.png", 16, 0, "Generic");
-    layer4 = new aSprite(0,0,"layer4.png", 19, 0, "Generic");
-    layer3 = new aSprite(0,0,"layer3.png", 22, 0, "Generic");
-    layer2 = new aSprite(0,0,"layer2.png", 20, 0, "Generic");
-    layer1 = new aSprite(0,0,"layer1.png", 20, 0, "Generic");
+    layers[0] = new aSprite(0,0,"layer8.png", 10, 0, "Generic");
+    layers[1] = new aSprite(0,0,"layer7.png", 10, 0, "Generic");
+    layers[2] = new aSprite(0,0,"layer6.png", 13, 0, "Generic");
+    layers[3] = new aSprite(0,0,"layer5.png", 16, 0, "Generic");
+    layers[4] = new aSprite(0,0,"layer4.png", 19, 0, "Generic");
+    layers[5] = new aSprite(0,0,"layer3.png", 22, 0, "Generic");
+    layers[6] = new aSprite(0,0,"layer2.png", 20, 0, "Generic");
+    layers[7] = new aSprite(0,0,"layer1.png", 20, 0, "Generic");
+
+    layerSpeeds[0] = 0;
+    layerSpeeds[1] = 0;
+    layerSpeeds[2] = 0;
+    layerSpeeds[3] = 0;
+    layerSpeeds[4] = 0;
+    layerSpeeds[5] = 0;
+    layerSpeeds[6] = 0;
+    layerSpeeds[7] = 0;
+
     startTimeMS = Date.now();
     gameLoop();
     }
@@ -154,52 +153,15 @@ function gameLoop(){
     //console.log("gameLoop");
     var elapsed = (Date.now() - startTimeMS)/1000;
 
-    l8speed += elapsed * layer8.vx
-    if (l8speed > layer8.sImage.width)
+    for (i = 0; i < layers.length; i++)
     {
-        l8speed = 0;
-    }
-
-    l7speed += elapsed * layer7.vx
-    if (l7speed > layer7.sImage.width)
-    {
-        l7speed = 0;
-    }
-
-    l6speed += elapsed * layer6.vx
-    if (l6speed > layer6.sImage.width)
-    {
-        l6speed = 0;
-    }
-
-    l5speed += elapsed * layer5.vx
-    if (l5speed > layer5.sImage.width)
-    {
-        l5speed = 0;
-    }
-
-    l4speed += elapsed * layer4.vx
-    if (l4speed > layer4.sImage.width)
-    {
-        l4speed = 0;
-    }
-
-    l3speed += elapsed * layer3.vx
-    if (l3speed > layer3.sImage.width)
-    {
-        l3speed = 0;
-    }
-
-    l2speed += elapsed * layer2.vx
-    if (l2speed > layer2.sImage.width)
-    {
-        l2speed = 0;
-    }
-
-    l1speed += elapsed * layer1.vx
-    if (l1speed > layer1.sImage.width)
-    {
-        l1speed = 0;
+        //console.log(layerSpeeds[i]);
+        layerSpeeds[i] += elapsed * (layers[i].vx);
+        //console.log("Initial Speed " + layerSpeeds[i] + layers[i].vx);
+        if (layerSpeeds[i] > layers[i].sImage.width)
+        {
+            layerSpeeds[i] = 0;
+        }
     }
 
     update(elapsed);
@@ -218,18 +180,12 @@ function render(delta) {
 
     if(gameLevel == true && (mainMenu == false && endMenu == false))
     {
-        layer8.scrollBK(l8speed);
-        layer7.scrollBK(l7speed);
-        layer6.scrollBK(l6speed);
-        layer5.scrollBK(l5speed);
-        layer4.scrollBK(l4speed);
-        layer3.scrollBK(l3speed);
-        layer2.scrollBK(l2speed);
-        layer1.scrollBK(l1speed);
+        for (i = 0; i < layers.length; i++)
+        {
+            layers[i].scrollBK(layerSpeeds[i]);
+            //console.log(layerSpeeds[i]);
+        }
     }
-
-    //bkgdImage.scrollBK(travel);
-    //theCar.render();
 }
 
 function update(delta) {
