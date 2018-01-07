@@ -41,6 +41,7 @@ class aSprite {
         canvasContext.translate(-delta, 0);
         canvasContext.drawImage(this.sImage,0, 0);
         canvasContext.drawImage(this.sImage,this.sImage.width, 0);
+        //canvasContext.drawImage(this.sImage,this.x, this.y, canvas.width, canvas.height );
         canvasContext.restore();
     }
 
@@ -76,12 +77,12 @@ class Enemy extends aSprite {
 
 var canvas;
 var canvasContext;
-var theCar;
+var theShooter;
 var layers = [];
 var layerSpeeds = [];
 
-var mainMenu = true;
-var gameLevel = false;
+var mainMenu = false;
+var gameLevel = true;
 var endMenu = false;
 var mouseIsDown = 0;
 var lastPt = null;
@@ -144,6 +145,8 @@ function init() {
     layerSpeeds[6] = 0;
     layerSpeeds[7] = 0;
 
+    theShooter = new aSprite(960,745,"shooter2.png", 0, 0, "Generic");
+
     startTimeMS = Date.now();
     gameLoop();
     }
@@ -185,6 +188,8 @@ function render(delta) {
             layers[i].scrollBK(layerSpeeds[i]);
             //console.log(layerSpeeds[i]);
         }
+
+        theShooter.render();
     }
 }
 
@@ -212,7 +217,7 @@ function touchUp(evt) {
 function touchDown(evt) {
     evt.preventDefault();
     mouseIsDown = 1;
-    if(mainMenu == true && (gameLevel == false && endMenu == false))
+    /*if(mainMenu == true && (gameLevel == false && endMenu == false))
     {
         gameLevel = true;
         mainMenu = false;
@@ -224,7 +229,7 @@ function touchDown(evt) {
         mainMenu = true;
         gameLevel = false;
         return;
-    }
+    }*/
     touchXY(evt);
 }
 
