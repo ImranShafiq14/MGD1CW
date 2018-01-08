@@ -81,8 +81,8 @@ var theShooter;
 var layers = [];
 var layerSpeeds = [];
 
-var mainMenu = false;
-var gameLevel = true;
+var mainMenu = true;
+var gameLevel = false;
 var endMenu = false;
 var mouseIsDown = 0;
 var lastPt = null;
@@ -126,6 +126,8 @@ function init() {
     console.log(theCar.y);*/
 
     mainMenuBkImg = new aSprite(0,0,"MainMenu.png", 0, 0, "Generic");
+    mainMenuPlayBtn = new aSprite(canvas.width-120, canvas.height-110, "PlayBlue.png", 0, 0, "Generic");
+    mainMenuInfoBtn = new aSprite(canvas.width-225, canvas.height-110, "InfoBlue.png", 0, 0, "Generic");
 
     layers[0] = new aSprite(0,0,"layer8.png", 10, 0, "Generic");
     layers[1] = new aSprite(0,0,"layer7.png", 10, 0, "Generic");
@@ -145,7 +147,16 @@ function init() {
     layerSpeeds[6] = 0;
     layerSpeeds[7] = 0;
 
-    theShooter = new aSprite(960,745,"shooter2.png", 0, 0, "Generic");
+    gameLevelLeftBtn = new aSprite(canvas.width-1895, canvas.height-110, "LeftBlue.png", 0, 0, "Generic");
+    gameLevelRightBtn = new aSprite(canvas.width-1790, canvas.height-110, "RightBlue.png", 0, 0, "Generic");
+    gameLevelFireBtn = new aSprite(canvas.width-120, canvas.height-110, "HomeBlue.png", 0, 0, "Generic");
+    gameLevelSoundBtn = new aSprite(canvas.width-225, canvas.height-110, "SoundBlue.png", 0, 0, "Generic");
+
+
+    theShooter = new aSprite(0,0,"shooter2.png", 0, 0, "Generic");
+    theShooter.sPos(canvas.width/2, 745);
+    //theShooter = new aSprite(canvas.width/2,745,"shooter2.png", 0, 0, "Generic");
+
 
     startTimeMS = Date.now();
     gameLoop();
@@ -179,6 +190,8 @@ function render(delta) {
     if(mainMenu == true && (gameLevel == false && endMenu == false))
     {
         mainMenuBkImg.render();
+        mainMenuPlayBtn.render();
+        mainMenuInfoBtn.render();
     }
 
     if(gameLevel == true && (mainMenu == false && endMenu == false))
@@ -188,6 +201,11 @@ function render(delta) {
             layers[i].scrollBK(layerSpeeds[i]);
             //console.log(layerSpeeds[i]);
         }
+
+        gameLevelLeftBtn.render();
+        gameLevelRightBtn.render();
+        gameLevelSoundBtn.render();
+        gameLevelFireBtn.render();
 
         theShooter.render();
     }
@@ -217,7 +235,7 @@ function touchUp(evt) {
 function touchDown(evt) {
     evt.preventDefault();
     mouseIsDown = 1;
-    /*if(mainMenu == true && (gameLevel == false && endMenu == false))
+    if(mainMenu == true && (gameLevel == false && endMenu == false))
     {
         gameLevel = true;
         mainMenu = false;
@@ -229,7 +247,7 @@ function touchDown(evt) {
         mainMenu = true;
         gameLevel = false;
         return;
-    }*/
+    }
     touchXY(evt);
 }
 
